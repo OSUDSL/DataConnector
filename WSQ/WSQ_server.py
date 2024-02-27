@@ -1,6 +1,4 @@
 from flask import Flask, jsonify, request
-import json
-from werkzeug.exceptions import BadRequest
 
 # create new flask application
 app = Flask(__name__)
@@ -18,13 +16,8 @@ def get_dict():
 
 @app.route('/update', methods=["POST"])
 def update_dict():
-    try:
-        data = request.get_json()
-        info.update(data)
-    except json.JSONDecodeError as e:
-        return "Error"
-    except TypeError:
-        return "Error"
+    data = request.get_json()
+    info.update(data)
     return ""
 
 # main driver function
