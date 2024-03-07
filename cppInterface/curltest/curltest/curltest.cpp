@@ -1,7 +1,10 @@
 #include <iostream>
 #include <curl/curl.h>
+#include <string>
+#include <map>
+#include <sstream>
 
-
+std::string makeJson(std::string server, std::map<std::string, float>);
 
 int main()
 {	
@@ -17,6 +20,21 @@ int main()
 
 	curl_easy_setopt(handle, CURLOPT_POSTFIELDS, putJson);
 	curl_easy_perform(handle);
+}
+
+std::string makeJson(std::string server, std::map<std::string, float> mp) {
+	std::ostringstream os;
+	std::map<std::string, float>::iterator it = mp.begin();
+
+	// Iterate through the map and print the elements
+	os << "{ ";
+	while (it != mp.end()) {
+		os << "\"" << it->first << "\" : " << it->second << "\"";
+		if (++it != mp.end()) {
+			os << ", ";
+		}
+	}
+	return os.str();
 }
 /*
 Make a function that (uses sprintf) has a string input of server name/address, 
