@@ -3,43 +3,65 @@
 #include <string>
 #include <map>
 #include <sstream>
+#include <profileapi.h>
 
-std::string makeJson(std::string server, std::map<std::string, float>);
+std::string makeJson(std::map<std::string, float>);
+CURL* curlHandleInit(const char* server);
+void curlHandleCleanup(CURL* handle);
+CURLcode sendRequest(CURL* handle, const char* jsonData);
 
 int main()
 {	
-	const char *putJson = "{\"Velocity\": 50, \"SimTime\": 124}";
+	//std::map<std::string, float> mp = { {"Velocity", (float)434}, {"SimTime", (float)654} };
+	std::map<std::string, float> mp = {};
+	std::string str = makeJson(mp);
+	const char * putJson = str.c_str();
 
-	CURL * handle = curl_easy_init();
+	CURL * handle = curlHandleInit("http://127.0.0.1:500/update");
+	CURLcode res = sendRequest(handle, putJson);
+	if (res != CURLE_OK) {
+		fprintf(stderr, "failed: %s", curl_easy_strerror(res));
+	}
 
-	struct curl_slist *slist1 = NULL;
-	slist1 = curl_slist_append(slist1, "Content-Type: application/json");
-	slist1 = curl_slist_append(slist1, "Accept: application/json");
-	curl_easy_setopt(handle, CURLOPT_HTTPHEADER, slist1);
-	curl_easy_setopt(handle, CURLOPT_URL, "http://localhost:5000/update");
-
-	curl_easy_setopt(handle, CURLOPT_POSTFIELDS, putJson);
-	curl_easy_perform(handle);
+	curlHandleCleanup(handle);
+	return 0;
 }
 
-std::string makeJson(std::string server, std::map<std::string, float> mp) {
+std::string makeJson(std::map<std::string, float> mp) {
 	std::ostringstream os;
 	std::map<std::string, float>::iterator it = mp.begin();
 
 	// Iterate through the map and print the elements
 	os << "{ ";
 	while (it != mp.end()) {
-		os << "\"" << it->first << "\" : " << it->second << "\"";
+		os << "\"" << it->first << "\" : " << it->second;
 		if (++it != mp.end()) {
 			os << ", ";
 		}
 	}
+	os << " }";
 	return os.str();
 }
-/*
-Make a function that (uses sprintf) has a string input of server name/address, 
-map of string to float
-function constructs the json string for the map (using sprintf and a loop)
 
-Make another function to execute the post request
-*/
+CURL* curlHandleInit(const char* server) {
+	CURL * handle = curl_easy_init();
+
+	struct curl_slist *slist1 = NULL;
+	slist1 = curl_slist_append(slist1, "Content-Type: application/json");
+	slist1 = curl_slist_append(slist1, "Accept: application/json");
+	
+	curl_easy_setopt(handle, CURLOPT_HTTPHEADER, slist1);
+	curl_easy_setopt(handle, CURLOPT_URL, server);
+	curl_easy_setopt(handle, CURLOPT_CONNECTTIMEOUT_MS, 50);
+	curl_easy_setopt(handle, CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS, 10);
+	return handle;
+}
+
+void curlHandleCleanup(CURL* handle) {
+	curl_easy_cleanup(handle);
+}
+
+CURLcode sendRequest(CURL* handle, const char* jsonData) {
+	curl_easy_setopt(handle, CURLOPT_POSTFIELDS, jsonData);
+	return curl_easy_perform(handle);
+}

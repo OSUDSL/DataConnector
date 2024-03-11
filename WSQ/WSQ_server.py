@@ -18,7 +18,7 @@ def get_dict():
 def update_dict():
     data = request.get_json()
     info.update(data)
-    return jsonify(info)
+    return ""
 
 # main driver function
 if __name__ == '__main__':
