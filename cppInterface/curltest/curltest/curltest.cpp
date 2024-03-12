@@ -17,8 +17,9 @@ int main()
 	std::string str = makeJson(mp);
 	const char * putJson = str.c_str();
 
-	CURL * handle = curlHandleInit("http://127.0.0.1:500/update");
+	CURL * handle = curlHandleInit("http://127.0.0.1:5000/update");
 	CURLcode res = sendRequest(handle, putJson);
+
 	if (res != CURLE_OK) {
 		fprintf(stderr, "failed: %s", curl_easy_strerror(res));
 	}
