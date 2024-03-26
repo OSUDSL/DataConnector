@@ -2,12 +2,12 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: Simulation Data API
-  description: A simple API to connect with driving simulator in real-time
+  description: A simple API for driving simulator
 
 paths:
   /:
     get:
-      summary: Get request that returns simulation data
+      description: Returns the data
       responses:
         '200':
           description: Successfully returned data as a json object

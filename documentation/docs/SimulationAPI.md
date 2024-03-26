@@ -1,1 +1,1 @@
-<swagger-ui src="openApi.yaml"/>
+<redoc src="openApi.yaml"/>

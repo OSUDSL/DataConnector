@@ -1,5 +1,7 @@
 site_name: Driving Simulation Data Connector
 plugins:
-  - swagger-ui-tag:
-      docExpansion: "full"
-theme: readthedocs
+  - redoc-tag
+theme:
+  name: material
+  palette:
+    scheme: slate
