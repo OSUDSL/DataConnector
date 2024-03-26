@@ -1,3 +1,4 @@
 site_name: My Docs
 plugins:
   - swagger-ui-tag
+theme: readthedocs

@@ -1,1 +1,2 @@
-<swagger-ui src="index.md"/>
+<swagger-ui src="openApi.yaml"/>
+Hello
