@@ -1,4 +1,5 @@
-site_name: My Docs
+site_name: Driving Simulation Data Connector
 plugins:
-  - swagger-ui-tag
+  - swagger-ui-tag:
+      docExpansion: "full"
 theme: readthedocs

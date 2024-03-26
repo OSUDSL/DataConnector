@@ -2,7 +2,7 @@ import json
 import requests
 
 data = { "velocity" : 45 }
-#r = requests.get('http://127.0.0.1:5000/')
+r = requests.get('http://127.0.0.1:5000/')
 #print(r)
 # # test incorrect client requests
 # # 1. send the dictionary as a string instead of json

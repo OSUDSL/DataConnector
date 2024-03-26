@@ -10,11 +10,25 @@ paths:
       description: Returns the data
       responses:
         '200':
-          description: Successfully returned data
+          description: Successfully returned data as a json object
           content:
             application/json:
               schema:
                 type: object
+              examples:
+                Velocity and Time:
+                  value:
+                    {
+                      "Velocity": 50,
+                      "SimTime": 120
+                    }
+                YPosition and Velocity:
+                  value:
+                    {
+                      "YPosition": 243.28,
+                      "Velocity": 37
+                    }
+
 
   /update:
     post:
