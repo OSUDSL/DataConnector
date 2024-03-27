@@ -32,13 +32,13 @@ paths:
 
   /update:
     post:
-      description: Allows user to update data
+      summary: Post request to update simulation data
       requestBody:
         required: True
         content:
           application/json:
             schema:
-              type: object
+              type: json file
       responses:
         '200':
           description: Successfully updated the data
