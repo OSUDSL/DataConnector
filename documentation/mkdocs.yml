@@ -1,0 +1,7 @@
+site_name: Driving Simulation Data Connector
+plugins:
+  - redoc-tag
+theme:
+  name: material
+  palette:
+    scheme: slate
