@@ -4,8 +4,7 @@ import time
 import tqdm
 
 def run_main():
-    dat = pl.read_csv("../Experimenter_3220002w2_Load, Event_1637262682.dat", separator=' ')
-
+    dat = pl.read_parquet("../test_playback_data1.parquet")
     start_time = time.time()
     max_time = dat.get_column("DatTime").max()
 

@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from waitress import serve
 
 # create new flask application
 app = Flask(__name__)
@@ -11,17 +12,16 @@ info = {
     }
 
 @app.route('/', methods=["GET"])
-def get_dict():
+def get_data():
     return jsonify(info)
 
 @app.route('/update', methods=["POST"])
-def update_dict():
+def update_data():
     data = request.get_json()
     info.update(data)
     return ""
 
 # main driver function
 if __name__ == '__main__':
-    # run() method of Flask class runs the application
-    # on the local development server.
-    app.run()
+    serve(app, port=5000)
+
